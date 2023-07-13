@@ -1,0 +1,114 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:{} arch:headline
+#+options: author:nil broken-links:mark c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:nil e:t email:nil f:t inline:t num:nil
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:nil title:t toc:nil todo:t |:t
+#+title: Readme
+
+#+latex_header_extra: \usepackage{minted}
+
+* Requirements
+
+#+begin_src toml
+  dependencies = [
+      "jax>=0.4.3",
+      "jaxlib>=0.4.3",
+      "jaxopt>=0.6",
+      "optax>=0.1.4",
+      "dm-haiku>=0.0.9",
+      "tqdm>=4.64.1",
+      "smile-config[rich]>=0.11.0",
+      "scikit-learn>=1.2.1",
+      "jaxtyping>=0.2.12",
+      "chex>=0.1.6",
+      "matplotlib>=3.7.1",
+  ]
+#+end_src
+
+* Installation
+
+#+begin_src shell
+  pip install pdm
+  pdm install
+#+end_src
+
+* Usage
+
+#+begin_src shell
+  > python -m train --help
+
+  Usage: config.py [-h] [--data_path str] [--model_dir str] [--seed int] [--reload | --no-reload] [--norm | --no-norm] [--val | --no-val]
+                   [--split | --no-split] [--group | --no-group] [--batch_size int] [--epochs int] [--chkt int] [--lr float] [--k int] [--optim str]
+                   [--model str] [--manifold Annotated] [--c float] [--bt | --no-bt] [--net.out_size str [str ...]] [--net.activation str]
+                   [--net.leaky_relu_slope float] [--net.dropedge | --no-net.dropedge] [--net.dropedge_rate float] [--net.dropout | --no-net.dropout]
+                   [--net.dropout_rate float] [--net.use_att | --no-net.use_att] [--net.heads int] [--net.concat | --no-net.concat]
+                   [--net.pearson | --no-net.pearson] [--net.trainc | --no-net.trainc]
+
+  Configuration for brain.
+
+  Options:
+    -h, --help            show this help message and exit
+    --data_path str       - (default: data/Data_MIA/Data_MIA_deepFusion)
+    --model_dir str       - (default: results)
+    --seed int            - (default: 7)
+    --reload, --no-reload
+                          - (default: False)
+    --norm, --no-norm     - (default: True)
+    --val, --no-val       - (default: True)
+    --split, --no-split   - (default: True)
+    --group, --no-group   - (default: True)
+    --batch_size int      - (default: 1000)
+    --epochs int          - (default: 200)
+    --chkt int            - (default: 50)
+    --lr float            - (default: 0.001)
+    --k int               - (default: 5)
+    --optim str           - (default: adam)
+    --model str           - (default: bgcn)
+    --manifold Annotated  (e)uclidean|(p)oincare (default: euclidean)
+    --c float             - (default: 1.0)
+    --bt, --no-bt         - (default: False)
+
+  Net:
+    --net.out_size str [str ...]
+                          - (default: (148, 296))
+    --net.activation str  - (default: leaky_relu)
+    --net.leaky_relu_slope float
+                          - (default: 0.2)
+    --net.dropedge, --no-net.dropedge
+                          - (default: True)
+    --net.dropedge_rate float
+                          - (default: 0.8)
+    --net.dropout, --no-net.dropout
+                          - (default: True)
+    --net.dropout_rate float
+                          - (default: 0.6)
+    --net.use_att, --no-net.use_att
+                          - (default: False)
+    --net.heads int       - (default: 4)
+    --net.concat, --no-net.concat
+                          - (default: False)
+    --net.pearson, --no-net.pearson
+                          - (default: True)
+    --net.trainc, --no-net.trainc
+                          - (default: False)
+#+end_src
+
+* Example
+
+** Train brain GCN in Euclidean space
+
+#+begin_src shell
+  python -m train --model "bgcn" --manifold "e" --norm --val --seed 10
+#+end_src
+
+** Train brain GCN with Poincaré embeddings
+
+#+begin_src shell
+  python -m train --model "bgcn" --manifold "p" --norm --val --seed 10
+#+end_src
+
+** Train brain Hyperbolic GCN
+
+#+begin_src shell
+  python -m train --model "bhgcn" --manifold "p" --norm --val --seed 10
+#+end_src
