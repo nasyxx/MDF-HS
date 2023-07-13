@@ -7,6 +7,12 @@
 
 #+latex_header_extra: \usepackage{minted}
 
+* Introduction
+
+For paper "Multimodal Deep Fusion in Hyperbolic Space for Mild Cognitive Impairment Study".
+
+We have a split JAX hyperbolic library here: https://github.com/nasyxx/jaxrie
+
 * Requirements
 
 #+begin_src toml
